@@ -1,0 +1,81 @@
+Roles a considerar:
+Administrador, el cual se encarga de:
+●Generar informes de venta mensual.
+●Generar informes de desempeño de la tienda.
+●Desarrollar estrategias de ventas y promociones.
+
+Vendedor/Encargado, el cual se encarga de:
+●Asesorar a los clientes en la selección de productos.
+●Recibir y procesar pedidos.
+●Gestionar los pagos y facturación.
+
+Bodeguero, el cual se encarga de:
+●Organizar y mantener el inventario.
+●Preparar y entregar los productos a los vendedores para su venta.
+●Asegurar el adecuado almacenamiento de los materiales.
+
+Contador, el cual se encarga de:
+●Llevar el registro de las transacciones de venta.
+●Controlar y registrar los pagos y las finanzas de la tienda.
+●Elaborar balances y reportes financieros.
+
+
+El sitio web debe incluir las siguientes características:
+●Sistema de Inicio de Sesión para Clientes, Administradores, Vendedores, Bodegueros y Contadores.
+●Los Clientes pueden registrarse con su correo electrónico para recibir noticias, ofertas especiales y descuentos en compras de más de cuatro artículos.
+●Los Administradores tienen cuentas predeterminadas con un usuario y contraseña inicial basados en su nombre y RUT, respectivamente, que deben ser cambiados tras el primer inicio de sesión.
+●Los Vendedores, Bodegueros y Contadores cuentan con usuarios asignados por el administrador.
+
+Crear vistas:
+
+Vista Cliente
+● Visualizar productos en el catálogo virtual.
+● Comprar productos mediante un sistema de carrito de compras.
+● Seleccionar retiro en tienda o despacho a domicilio.
+● Diversas opciones de pago: débito, crédito, transferencia.
+
+Vista Vendedor
+● Visualizar productos disponibles en bodega.
+● Aprobar o rechazar pedidos.
+● Enviar órdenes a bodegueros y organizar el despacho a clientes.
+
+Vista Bodeguero
+● Ver ordenes de pedidos.
+● Aceptar y preparar pedidos.
+● Entregar pedidos a los vendedores para su despacho.
+
+Vista Contador
+● Confirmar pagos efectuados por transferencia.
+● Registrar la entrega de productos a clientes.
+
+crear API/Webservice
+
+● deber permitir ver informacion detallada de los productos
+  incluyendo precios, modelos, marcas, códigos y stock
+● segundo que otras tiendas puedan consultar precios y detalles desde sus propias aplicaciones conectándose
+  a la API/Webservice (consumo API/Webservice de forma externa vía Internet).
+
+estructura de los productos en la api
+
+ {
+ "Código del producto": "FER-12345",
+ "Marca": "Bosch",
+ "Código": "BOS-67890",
+ "Nombre": "Taladro Percutor Bosch",
+ "Precio": [
+  {
+  "Fecha": "2023-05-10T03:00:00.000Z",
+  Subdirección de Evaluación de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 1- 2023 5
+  "Valor": 89090.99
+  }
+ ]
+
+creacion de la api
+●Se busca usar una api de geolocalizacion 
+●El cliente puede seleccionar su ubicacion para que quede en el registro de envios
+
+cosas a cambiar:
+● manipulacion de los productos a travez de la api y no por la base de datos
+● base de datos(usuarios)
+● Cambiar el carrito 
+●cambio de imagen de la pagina

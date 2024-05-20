@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>FERREMAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="{% static 'images/Icono_Ferremas.png' %}" width="120px" alt="martillo básico">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'Inicio' %}">Inicio</a></li>
+                        <li><a href="{% url 'Inicio' %}">Productos</a></li>
+                        <li><a href="{% url 'Inicio' %}">Informaciones</a></li>
+                        <li><a href="{% url 'Inicio' %}">Menu</a></li>
+                        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                        <li><a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a>
+                            <div id="Modal0" class="modal0">
+                              <div class="modal0-contenido">
+                                <a href="#">X</a>
+                                <h2>Modal Extra!</h2>
+                                <p>Sí se puede maybe UwU.</p>
+                                <p>Quién sabe, puede ser útil, para el carrito maybe?.</p>
+                              </div>  
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                
+            </div>
+            
+        </div>
+    
+    
+        <!-- Columna Página-->
+        {% block content %}    
+        {% endblock %}
+    
+
+
+   <!-- Productos a mostrar -->
+   <!-- Pie de Página -->
+   <footer class="text-justify text-lg-start modal-footer bg-dark">
+    <div class="container-fluid" id="MerecemosEse7sionoUwU">
+      <div class="row" style="padding: 1%;" >
+    <!--parte1-->
+        <div class="col mb-0" style="padding-inline-start: 8%;">
+          <h6 class="text-uppercase nav-item mb-2" style="color: darkgray;">Inforación Relevante</h6>
+          <p style="font-size: smaller; color: grey;">
+            El desarrollo de esta página web ha sido originado por un trabajo grupal en
+            el ramo de "Programación Web" correspondiente a la seccion 006D, impartido
+            por el docente y verdugo de estabilidad mental y emocional
+          </p>
+          <p style="font-size: medium; color: azure;">Ronald Villalobos</p>
+          <p style="font-size: smaller; color: grey;">
+            en el semestre primero del año 2023. Esperamos nuestro 7 con ansias profe. :D
+          </p>
+    <!--separador-->
+        </div>
+        <div class="col-3"></div>
+    <!--parte2-->
+        <div class="col mb-0" style="padding-inline-end: 8%;">
+          <h6 class="text-uppercase" style="color: darkgray;">Estudiantes</h6>
+          <p style="font-size: smaller; color: grey;">
+            Diseñado, desarrollado y especialmente sufrido por:
+            <h6 style="font-size: medium; padding-left: 8%; color: azure;">
+                Ignacia Ciero R.</h6>
+            <h6 style="font-size: medium; padding-left: 8%; color: azure;">
+                Alejandro Pimiento O.</h6>
+          </p>
+          <!-- Copyright -->
+    <div class="text-center p-0" style="color: gray; background-color: rgba(0, 0, 0, 0);">
+        © 2023 Copyright:
+        <a class="text-muted" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      </div>
+    <div class="col">
+        <a href="#Iniciouwu">Volver arriba owo</a>
+    </div>
+      <!-- Copyright -->     
+        </div>
+      </div>
+    </div>
+    <!-- Copyright -->
+    </div>          
+  </footer>
+</body>
+</html>
