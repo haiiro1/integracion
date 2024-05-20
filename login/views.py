@@ -1,9 +1,45 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import CustomUser
 
-def login(request):
-    context = {}
-    return render(request, 'crud/login.html',context)
 
-def registro_cliente(request):
-    context = {}
-    return render(request, 'crud/inicio.html',context)
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = CustomAuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+@staff_member_required
+def register_staff(request):
+    if request.method == 'POST':
+        form = StaffUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.save()
+            return redirect('home')
+    else:
+        form = StaffUserCreationForm()
+    return render(request, 'registration/register_staff.html', {'form': form})
