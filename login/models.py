@@ -30,4 +30,10 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
+class MiModelo(models.Model):
+    nombre = models.CharField(max_length=100)
+    contraseña = models.IntegerField()
+    # Define otros campos según tus necesidades
+
     
