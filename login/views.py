@@ -12,10 +12,10 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('')
+            return redirect(' crud/login.html')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'crud\signup.html', {'form': form})
+    return render(request, 'crud/signup.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('')
+                return redirect('app/inicio.html')
     else:
         form = CustomAuthenticationForm()
     return render(request, 'crud/login.html', {'form': form})
@@ -39,7 +39,7 @@ def register_staff(request):
             user = form.save(commit=False)
             user.is_staff = True
             user.save()
-            return redirect('')
+            return redirect('crud/login.html')
     else:
         form = StaffUserCreationForm()
     return render(request, 'crud/register_staff.html', {'form': form})
