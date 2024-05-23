@@ -178,3 +178,10 @@ p{                                     /* Color de letras en la navbar */
     padding-right: 25px;
 
 }
+
+.footer{
+    background-color: rgba(88, 19, 10, 0.377);
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}

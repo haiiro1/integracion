@@ -1,0 +1,63 @@
+{% extends 'Ferremas_pri/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="categories">
+        <div class="small-container">
+
+            <div> <!-- API base de muestra de Productos  -->
+                <div id="product-details">
+                    <h2>Product Details</h2>
+                    <div id="product-info">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            
+                <script>
+                    $(document).ready(function() {
+                        // Make AJAX request to fetch product details
+                        $.ajax({
+                            url: '/api/productos/1/',  // Replace '1' with the actual ID of the product
+                            method: 'GET',
+                            success: function(data) {
+                                // Render product details in the page
+                                var productHtml = `
+                                    <p><strong>Name:</strong> ${data.name}</p>
+                                    <p><strong>Description:</strong> ${data.description}</p>
+                                    <p><strong>Price:</strong> ${data.price}</p>
+                                    <!-- Add more details here as needed -->
+                                `;
+                                $('#product-info').html(productHtml);
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error
+                                console.error('Error fetching product details:', error);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+
+
+            <div class="row">
+                <div class="col-3">
+                    <img src=" {% static 'images/Categoria_0.png' %}" alt="">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Categoria_1.png' %}" alt="">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Categoria_2.png' %}" alt="">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Categoria_3.png' %}" alt="">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Categoria_4.png' %}" alt="">
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/Categoria_5.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
