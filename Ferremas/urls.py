@@ -6,5 +6,6 @@ urlpatterns = [
     path('',include('Ferremas_pri.urls')),
     path('user/', include('login.urls')),
     path('user/', include('django.contrib.auth.urls')),
+    
 ]
     

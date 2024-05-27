@@ -1,0 +1,33 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/api/productos/')
+                .then(response => response.json())
+                .then(data => {
+                    const productosContainer = document.getElementById('productos-container');
+                    data.forEach(producto => {
+                        const productoElement = document.createElement('div');
+                        productoElement.innerHTML = `
+                            <h2>${producto.nombre}</h2>
+                            <p>${producto.descripcion}</p>
+                            <p>Precio: ${producto.precio}</p>
+                            <p>Marca: ${producto.marca}</p>
+                        `;
+                        productosContainer.appendChild(productoElement);
+                    });
+                });
+        });
+    </script>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <div id="productos-container"></div>
+</body>
+</html>
+
+-->
