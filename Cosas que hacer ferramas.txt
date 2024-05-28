@@ -48,27 +48,9 @@ Vista Contador
 ● Confirmar pagos efectuados por transferencia.
 ● Registrar la entrega de productos a clientes.
 
-crear API/Webservice
 
-● deber permitir ver informacion detallada de los productos
-  incluyendo precios, modelos, marcas, códigos y stock
-● segundo que otras tiendas puedan consultar precios y detalles desde sus propias aplicaciones conectándose
-  a la API/Webservice (consumo API/Webservice de forma externa vía Internet).
 
-estructura de los productos en la api
 
- {
- "Código del producto": "FER-12345",
- "Marca": "Bosch",
- "Código": "BOS-67890",
- "Nombre": "Taladro Percutor Bosch",
- "Precio": [
-  {
-  "Fecha": "2023-05-10T03:00:00.000Z",
-  Subdirección de Evaluación de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 1- 2023 5
-  "Valor": 89090.99
-  }
- ]
 
 creacion de la api
 ●Se busca usar una api de geolocalizacion 
@@ -76,6 +58,5 @@ creacion de la api
 
 cosas a cambiar:
 ● manipulacion de los productos a travez de la api y no por la base de datos
-● base de datos(usuarios)
 ● Cambiar el carrito 
 ●cambio de imagen de la pagina
