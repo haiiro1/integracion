@@ -7,17 +7,35 @@
 
 <div class="row" style="padding: 2%;">
     {% for producto in productos %}
-    <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;">
+    <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;" alt="{{ producto.nombre }}">
         <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
         <div class="p_container" style="collapse">
           <h4><b>{{ producto.marca }}</b></h4> 
           <p>{{ producto.nombre }}</p>
           <p>{{ producto.precio }}</p>
-          <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn btn-primary" style="text-align: right;">Agregar al Carrito</a>
+          <button class="add-to-cart" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
         </div>
     </div>
     {% endfor %}
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-to-cart').on('click', function() {
+        var productId = $(this).data('product-id');
+        $.ajax({
+            url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
+            method: "GET",
+            success: function(data) {
+                alert('Producto agregado al carrito. Total items: ' + data.total_items);
+            },
+            error: function(xhr, status, error) {
+                alert('Error al agregar el producto al carrito.');
+            }
+        });
+    });
+});
+</script>
 
 {% endblock %}

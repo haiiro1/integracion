@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 <body>
     <div class="header">
@@ -22,9 +24,9 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'inicio' %}">Inicio</a></li>
-                        <li><a href="{% url 'inicio' %}">Productos</a></li>
-                        <li><a href="{% url 'inicio' %}">Informaciones</a></li>
+                        <li><a href="{% url 'lista_productos' %}">Productos</a></li>
                         <li><a href="{% url 'inicio' %}">Menu</a></li>
+                        <li><a href="{% url 'ver_carrito' %}">Carrito</a></li>
                         <li><a href="#ModalLogin">Iniciar Sesión</a>
                             <div id="ModalLogin" class="modal1">
                                 <div class="modal1-contenido">
@@ -35,16 +37,19 @@
                                 </div>
                           </div>
                         </li>
-                        <li><a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a>
+                        <li>
+                          <a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a>
                           <div id="Modal0" class="modal0">
-                            <div class="modal0-contenido">
-                              <a href="#"></a>                  <!-- Ingresar el ___URL del 'Carrito'___ AQUÍ! NO ANTES, pls~ -->
-                              <h2>Carrito de Compras!</h2>
-                              <p>Sí se puede maybe UwU.</p>
-                              <p>Sí, aquí va a ir lo del carrito, yaas. </p>
-                            </div>
+                              <div class="modal0-contenido">
+                                  <a href="#" class="close-modal">X</a>                  
+                                  <h2>Carrito de Compras!</h2>
+                                  <div id="carrito-contenido">
+                                      <!--                                 El contenido del carrito se carga aquí, no mover         -->
+                                  </div>
+                              </div>
                           </div>
                       </li>
+                      
 
                     </ul>
                 </nav>
@@ -101,5 +106,46 @@
           </div>
       </div>
   </div>
+
+  <script>
+  $(document).on('click', '.add-to-cart', function() {
+      var productId = $(this).data('product-id');
+      $.ajax({
+          url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
+          method: "GET",
+          success: function(data) {
+              alert('Producto agregado al carrito. Total items: ' + data.total_items);
+          },
+          error: function(xhr, status, error) {
+              alert('Error al agregar el producto al carrito.');
+          }
+      });
+  });
+
+  $(document).on('click', 'a[href="#Modal0"]', function() {
+      $.ajax({
+          url: "{% url 'obtener_contenido_carrito' %}",
+          method: "GET",
+          success: function(data) {
+              $('#carrito-contenido').html(data.html);
+              $('#Modal0').show(); // Muestra el modal después de cargar el contenido
+          },
+          error: function(xhr, status, error) {
+              alert('Error al obtener el contenido del carrito.');
+          }
+      });
+  });
+
+  $(document).on('click', '.close-modal', function() {
+      $(this).closest('.modal0').hide();
+  });
+
+  $(document).on('click', function(event) {
+      if ($(event.target).is('.modal0')) {
+          $('.modal0').hide();
+      }
+  });
+  </script>
+
 </body>
 </html>
