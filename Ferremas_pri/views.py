@@ -16,6 +16,10 @@ def inicio(request):
     context = {}
     return render(request, 'ferremas_pri/inicio.html', context)
 
+def lista_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'ferremas_pri/lista_productos.html', {'productos': productos})
+
 class ProductoListCreate(generics.ListCreateAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer

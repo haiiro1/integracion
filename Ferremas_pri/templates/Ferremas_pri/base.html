@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>FERREMAS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,9 +51,10 @@
                 
             </div>
     <!-- Columna Página-->                                    <!-- Contenido de página -->
-        
-        {% block content %}    
-        {% endblock %}
+        <div class="containter-fluid">
+            {% block content %}    
+            {% endblock %}
+        </div>
 
     <!-- Inserte otros Productos para  mostrar -->
         </div>

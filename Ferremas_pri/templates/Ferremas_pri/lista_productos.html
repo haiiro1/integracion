@@ -1,33 +1,22 @@
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Productos</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('/api/productos/')
-                .then(response => response.json())
-                .then(data => {
-                    const productosContainer = document.getElementById('productos-container');
-                    data.forEach(producto => {
-                        const productoElement = document.createElement('div');
-                        productoElement.innerHTML = `
-                            <h2>${producto.nombre}</h2>
-                            <p>${producto.descripcion}</p>
-                            <p>Precio: ${producto.precio}</p>
-                            <p>Marca: ${producto.marca}</p>
-                        `;
-                        productosContainer.appendChild(productoElement);
-                    });
-                });
-        });
-    </script>
-</head>
-<body>
-    <h1>Lista de Productos</h1>
-    <div id="productos-container"></div>
-</body>
-</html>
+{% extends 'Ferremas_pri/base.html' %}
+{% load static %}
+{% block content %}
 
--->
+<h1>Nuestros Productos</h1>
+
+<div class="row">
+    {% for producto in productos %}
+    <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;">
+        <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
+        <div class="p_container" style="collapse">
+          <h4><b>{{ producto.marca }}</b></h4> 
+          <p>{{ producto.nombre }}</p>
+          <p>{{ producto.precio }}</p>
+          <p style="text-align: right;"><button> + </button></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
