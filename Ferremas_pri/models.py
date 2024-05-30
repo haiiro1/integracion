@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 #                           Productos~
@@ -17,7 +18,7 @@ class Producto(models.Model):
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50, blank=True, null=True)
     categorias = models.ManyToManyField(Categoria, related_name='productos')  # Relación con categorías
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=0)
     stock = models.PositiveIntegerField()
     imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
 
@@ -26,13 +27,11 @@ class Producto(models.Model):
 
 
 #                           Carrito~
-"""
-class Carrito(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    productos = models.ManyToManyField(Producto, through='ItemCarrito')
 
 class ItemCarrito(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
-    """
+
+    class Meta:
+        unique_together = ['user', 'producto']

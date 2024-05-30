@@ -1,10 +1,11 @@
 {% extends 'Ferremas_pri/base.html' %}
 {% load static %}
 {% block content %}
-
+<br><br>
 <h1>Nuestros Productos</h1>
 
-<div class="row">
+
+<div class="row" style="padding: 2%;">
     {% for producto in productos %}
     <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;">
         <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
@@ -12,7 +13,7 @@
           <h4><b>{{ producto.marca }}</b></h4> 
           <p>{{ producto.nombre }}</p>
           <p>{{ producto.precio }}</p>
-          <p style="text-align: right;"><button> + </button></p>
+          <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn btn-primary" style="text-align: right;">Agregar al Carrito</a>
         </div>
     </div>
     {% endfor %}

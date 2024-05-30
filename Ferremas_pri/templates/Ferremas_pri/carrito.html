@@ -1,0 +1,31 @@
+{% extends 'Ferremas_pri/base.html' %}
+{% block content %}
+
+<h1>Carrito de Compras</h1>
+<table>
+    <tr>
+        <th>Producto</th>
+        <th>Precio Unitario</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for item in items %}
+    <tr>
+        <td>{{ item.producto.nombre }}</td>
+        <td>{{ item.producto.precio }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>{{ total }}</td>
+        <td><a href="{% url 'eliminar_del_carrito' item.id %}">Eliminar</a></td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="3">Total</td>
+        <td>{{ total }}</td>
+        <td><a href="{% url 'limpiar_carrito' %}">Vaciar Carrito</a></td>
+    </tr>
+</table>
+
+{% endblock %}

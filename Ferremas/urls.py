@@ -4,11 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('',include('Ferremas_pri.urls')),
+    path('admin/', admin.site.urls),
+    path('api/', include('Ferremas_pri.urls')),
     path('user/', include('login.urls')),
     path('user/', include('django.contrib.auth.urls')),
-    path('api/', include('Ferremas_pri.urls')),
+
 ]
     
 if settings.DEBUG:
