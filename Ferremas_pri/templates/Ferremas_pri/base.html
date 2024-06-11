@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>FERREMAS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="{% static 'js/login.js' %}"></script>
 </head>
 <body>
@@ -35,9 +37,10 @@
                     </ul>
                 </nav>
             </div>
-
-            {% block content %}
-            {% endblock %}
+<div class="containter-fluid">
+                {% block content %}
+                {% endblock %}
+        </div>
         </div>
 
         <!-- Modal Login -->
@@ -87,10 +90,54 @@
                     <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20)">
                         Alejandro Pimiento O.
                     </h6>
-                </div>
-            </div>
-        </div>
-    </div>
+                </p>
+
+                <br><a href="#Iniciouwu"><h6>Volver arriba owo</h6></a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+  $(document).on('click', '.add-to-cart', function() {
+      var productId = $(this).data('product-id');
+      $.ajax({
+          url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
+          method: "GET",
+          success: function(data) {
+              alert('Producto agregado al carrito. Total items: ' + data.total_items);
+          },
+          error: function(xhr, status, error) {
+              alert('Error al agregar el producto al carrito.');
+          }
+      });
+  });
+
+  $(document).on('click', 'a[href="#Modal0"]', function() {
+      $.ajax({
+          url: "{% url 'obtener_contenido_carrito' %}",
+          method: "GET",
+          success: function(data) {
+              $('#carrito-contenido').html(data.html);
+              $('#Modal0').show(); // Muestra el modal después de cargar el contenido
+          },
+          error: function(xhr, status, error) {
+              alert('Error al obtener el contenido del carrito.');
+          }
+      });
+  });
+
+  $(document).on('click', '.close-modal', function() {
+      $(this).closest('.modal0').hide();
+  });
+
+  $(document).on('click', function(event) {
+      if ($(event.target).is('.modal0')) {
+          $('.modal0').hide();
+      }
+  });
+  </script>
+
 </body>
 </html>
 

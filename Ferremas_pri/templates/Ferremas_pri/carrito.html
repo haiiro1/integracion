@@ -1,0 +1,51 @@
+{% extends 'Ferremas_pri/base.html' %}
+{% block content %}
+
+<h1>Carrito de Compras</h1>
+<div class="container" style="padding: 5%; border-radius: 5%;">
+    <table style="padding: 5%; border-radius: 5%;">
+        <tr>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.producto.precio }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ total }}</td>
+            <td><a href="{% url 'eliminar_del_carrito' item.id %}">Eliminar</a></td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td colspan="3">Total</td>
+            <td>{{ total }}</td>
+            <td><a href="{% url 'limpiar_carrito' %}">Vaciar Carrito</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="container">
+    <div >
+        <a href="{% url 'inicio' %}">Seguir comprando</a>
+        <a href="{% url 'inicio' %}">Realizar Compra</a>
+    </div>
+</div>
+
+{% endblock %}
+
+<!--            ESTE APARTADO VA EN EL BOTÓN **REALIZAR COMPRA**
+
+                    Trabajaré en este apartado la próxima vez
+            
+            
+            <form action="{% url 'realizar_pago' %}" method="post">
+            {% csrf_token %}
+             Agregar campos ocultos para enviar datos necesarios al realizar el pago
+            <button type="submit">Pagar</button>
+        </form>-->
