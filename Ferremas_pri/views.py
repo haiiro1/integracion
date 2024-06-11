@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics
-from .models import Producto
+from .models import * 
 from .serializers import ProductoSerializer
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .transbank_integration import issue_payment
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 
 
@@ -17,16 +19,16 @@ def base(request):
     return render(request, 'ferremas_pri/base.html', context)
 
 def inicio(request):
-    context = {}
-    return render(request, 'ferremas_pri/inicio.html', context)
+    productos = Producto.objects.all()
+    return render(request, 'ferremas_pri/inicio.html', {'productos': productos})
 
 def pagar(request):
     return render(request, 'ferremas_pri/pagar.html')
 
 #                                                                           Cosas de Productos ~
 def lista_productos(request):
-    productos = Producto.objects.all()
-    return render(request, 'ferremas_pri/lista_productos.html', {'productos': productos})
+    context = {}
+    return render(request, 'ferremas_pri/lista_productos.html',context)
 
 class ProductoListCreate(generics.ListCreateAPIView):
     queryset = Producto.objects.all()
@@ -34,7 +36,6 @@ class ProductoListCreate(generics.ListCreateAPIView):
 
 class ProductoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Producto.objects.all()
-<<<<<<< HEAD
     serializer_class = ProductoSerializer
 
 
@@ -91,6 +92,3 @@ def realizar_pago(request):
     
     # Procesar la respuesta y devolver una respuesta JSON
     return JsonResponse(response)
-=======
-    serializer_class = ProductoSerializer
->>>>>>> parent of aa330f2 (0.0.7)

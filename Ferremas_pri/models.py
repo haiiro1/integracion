@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 #                           Productos~
@@ -26,13 +27,14 @@ class Producto(models.Model):
 
 
 #                           Carrito~
-"""
+
 class Carrito(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     productos = models.ManyToManyField(Producto, through='ItemCarrito')
+    def __str__(self):
+        return f"Carrito de {self.usuario.username}"
 
 class ItemCarrito(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
-    """

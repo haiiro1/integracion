@@ -2,43 +2,23 @@
 {% load static %}
 {% block content %}
 
-<h1>Nuestros Productos</h1>
+<div class="categories">
+    <div class="small-container">
 
-<div class="row">
-    {% for producto in productos %}
-    <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;" alt="{{ producto.nombre }}">
-        <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
-        <div class="p_container" style="collapse">
-          <h4><b>{{ producto.marca }}</b></h4> 
-          <p>{{ producto.nombre }}</p>
-          <p>{{ producto.precio }}</p>
-<<<<<<< HEAD
-          <button class="add-to-cart" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
-=======
-          <p style="text-align: right;"><button> + </button></p>
->>>>>>> parent of aa330f2 (0.0.7)
+        <div> <!-- API base de muestra de Productos  -->
+            
+            <div id="product-details">
+                <h2>Product Details</h2>
+                <div id="product-info">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        
+            <script src="consultar.js"></script>
         </div>
-    </div>
-    {% endfor %}
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('.add-to-cart').on('click', function() {
-        var productId = $(this).data('product-id');
-        $.ajax({
-            url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
-            method: "GET",
-            success: function(data) {
-                alert('Producto agregado al carrito. Total items: ' + data.total_items);
-            },
-            error: function(xhr, status, error) {
-                alert('Error al agregar el producto al carrito.');
-            }
-        });
-    });
-});
-</script>
+
+    </div>
+</div>
 
 {% endblock %}
