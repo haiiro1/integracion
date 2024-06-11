@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm,StaffUserCreationForm
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import CustomUser
+from django.urls import reverse
 
 
 def register(request):
@@ -26,7 +27,7 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('app/inicio.html')
+                return redirect('inicio')  # Redirigir a la página de inicio
     else:
         form = CustomAuthenticationForm()
     return render(request, 'crud/login.html', {'form': form})
@@ -47,4 +48,4 @@ def register_staff(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('inicio')
+    return redirect(reverse('inicio') + '#ModalLogin')

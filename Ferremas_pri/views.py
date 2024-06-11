@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics
+from  .api import Mindicador
 from .models import * 
 from .serializers import ProductoSerializer
 from django.http import JsonResponse
@@ -10,6 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 
+def get_dolar_price(request):
+    mindicador = Mindicador('dolar', 2024)
+    dolar_price = mindicador.get_dolar_price()
+    return JsonResponse({'dolar_price': dolar_price})
 
 def testeo(request):
     return HttpResponse("Hello, world. You're at the polls index.")

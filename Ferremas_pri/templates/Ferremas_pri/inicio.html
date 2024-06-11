@@ -7,15 +7,39 @@
     <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;" alt="{{ producto.nombre }}">
         <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
         <div class="p_container">
-          <h4><b>{{ producto.marca }}</b></h4> 
-          <p>{{ producto.nombre }}</p>
-          <p>{{ producto.precio }}</p>
-          <button class="add-to-cart" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
+            <h4><b>{{ producto.marca }}</b></h4>
+            <p>{{ producto.nombre }}</p>
+            <p class="product-price-clp" data-price="{{ producto.precio }}">CLP: ${{ producto.precio }}</p>
+            <p class="price">USD: <span class="product-price-usd" id="product-price-usd-{{ producto.id }}"></span></p>
+            <button class="add-to-cart" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
         </div>
     </div>
     {% endfor %}
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="carrito.js"></script>
+<script src="{% static 'js/carrito.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Realiza una solicitud AJAX para obtener el precio del dólar
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "{% url 'get_dolar_price' %}", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            var dolarPrice = response.dolar_price;
+
+            // Actualiza el precio en dólares para cada producto
+            document.querySelectorAll('.product-price-clp').forEach(function (element) {
+                var clpPrice = parseFloat(element.getAttribute('data-price'));
+                var usdPrice = clpPrice / dolarPrice;
+                var productId = element.nextElementSibling.querySelector('.product-price-usd').id.split('-').pop();
+                document.getElementById("product-price-usd-" + productId).innerText = usdPrice.toFixed(2) + " USD";
+            });
+        }
+    };
+    xhr.send();
+});
+</script>
 {% endblock %}
+

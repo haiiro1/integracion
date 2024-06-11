@@ -1,19 +1,17 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>FERREMAS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script src="{% static 'js/login.js' %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="header">
@@ -31,32 +29,59 @@
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
                         {% else %}
-                            <li><a href="#ModalLogin" class="open-modal">Iniciar Sesión</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal">Iniciar Sesión</a></li>
                         {% endif %}
-                        <li><a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a></li>
+                        <li>
+                          <a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a>
+                          <div id="Modal0" class="modal0">
+                            <div class="modal0-contenido">
+                              <a href="#">X</a>                  <!-- Ingresar el ___URL del 'Carrito'___ AQUÍ! NO ANTES, pls~ -->
+                              <h2>Carrito de Compras!</h2>
+                              <p>Sí se puede maybe UwU.</p>
+                              <p>Sí, aquí va a ir lo del carrito, yaas. </p>
+                            </div>
+                          </div>
+                      </li>
                     </ul>
                 </nav>
             </div>
-<div class="containter-fluid">
+        <div class="containter-fluid">
                 {% block content %}
                 {% endblock %}
         </div>
-        </div>
 
         <!-- Modal Login -->
-        <div id="ModalLogin" class="modal1">
-            <div class="modal1-contenido">
-                <span class="close">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <label for="username">Correo Electronico:</label>
-                    <input type="text" id="username" name="username" required>
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                    <button type="submit">Iniciar Sesión</button>
-                    <a href="{% url 'register' %}">registrarse</a>
-                </form>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Contenido del Modal -->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username"><span class="glyphicon glyphicon-user"></span> Correo Electronico:</label>
+                                <input type="text" class="form-control" id="username" name="username" autocomplete="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Contraseña:</label>
+                                <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" required>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked> Recordarme</label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Iniciar Sesión</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                        <p>¿No eres miembro? <a href="{% url 'register' %}">Registrarse</a></p>
+                        <p>¿Olvidaste tu <a href="#">contraseña?</a></p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -90,54 +115,21 @@
                     <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20)">
                         Alejandro Pimiento O.
                     </h6>
-                </p>
+                    </p>
 
-                <br><a href="#Iniciouwu"><h6>Volver arriba owo</h6></a>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <script>
-  $(document).on('click', '.add-to-cart', function() {
-      var productId = $(this).data('product-id');
-      $.ajax({
-          url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
-          method: "GET",
-          success: function(data) {
-              alert('Producto agregado al carrito. Total items: ' + data.total_items);
-          },
-          error: function(xhr, status, error) {
-              alert('Error al agregar el producto al carrito.');
-          }
-      });
-  });
-
-  $(document).on('click', 'a[href="#Modal0"]', function() {
-      $.ajax({
-          url: "{% url 'obtener_contenido_carrito' %}",
-          method: "GET",
-          success: function(data) {
-              $('#carrito-contenido').html(data.html);
-              $('#Modal0').show(); // Muestra el modal después de cargar el contenido
-          },
-          error: function(xhr, status, error) {
-              alert('Error al obtener el contenido del carrito.');
-          }
-      });
-  });
-
-  $(document).on('click', '.close-modal', function() {
-      $(this).closest('.modal0').hide();
-  });
-
-  $(document).on('click', function(event) {
-      if ($(event.target).is('.modal0')) {
-          $('.modal0').hide();
-      }
-  });
-  </script>
-
+                    <br><a href="#Iniciouwu"><h6>Volver arriba owo</h6></a>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $("#myBtn").click(function(){
+                    $("#myModal").modal();
+                });
+            });
+        </script>
+    <script src="{% static 'js/carrito.js' %}"> </script>
+    </div>
 </body>
 </html>
 
