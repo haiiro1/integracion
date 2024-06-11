@@ -9,10 +9,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
+    <script src="{% static 'js/login.js' %}"></script>
 </head>
 <body>
     <div class="header">
@@ -24,79 +25,70 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'inicio' %}">Inicio</a></li>
-                        <li><a href="{% url 'lista_productos' %}">Productos</a></li>
-                        <li><a href="{% url 'inicio' %}">Menu</a></li>
-                        <li><a href="{% url 'ver_carrito' %}">Carrito</a></li>
-                        <li><a href="#ModalLogin">Iniciar Sesión</a>
-                            <div id="ModalLogin" class="modal1">
-                                <div class="modal1-contenido">
-                                    <a href="#">X</a>                  <!-- Ingresar el ___URL del 'login'___ AQUÍ! NO ANTES, pls~ -->
-                                    <h2>Modal del LOGIN!</h2>
-                                    <p>Lo habremos logrado? Ojalá uwu.</p>
-                                    <p>Quién sabe, puede ser útil, para el carrito maybe?.</p>
-                                </div>
-                          </div>
-                        </li>
-                        <li>
-                          <a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a>
-                          <div id="Modal0" class="modal0">
-                            <div class="modal0-contenido">
-                              <a href="#">X</a>                  <!-- Ingresar el ___URL del 'Carrito'___ AQUÍ! NO ANTES, pls~ -->
-                              <h2>Carrito de Compras!</h2>
-                              <p>Sí se puede maybe UwU.</p>
-                              <p>Sí, aquí va a ir lo del carrito, yaas. </p>
-                            </div>
-                          </div>
-                      </li>
-                      
-
+                        <li><a href="{% url 'inicio' %}">Productos</a></li>
+                        <li><a href="{% url 'inicio' %}">Informaciones</a></li>
+                        <li><a href="{% url 'inicio' %}">Menú</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                        {% else %}
+                            <li><a href="#ModalLogin" class="open-modal">Iniciar Sesión</a></li>
+                        {% endif %}
+                        <li><a href="#Modal0"><img src="{% static 'images/Icono_Compra.png' %}" height="30px" alt="Carrito de Compra"></a></li>
                     </ul>
                 </nav>
-                
             </div>
-    <!-- Columna Página-->                                    <!-- Contenido de página -->
-        <div class="containter-fluid">
-            {% block content %}    
-            {% endblock %}
+<div class="containter-fluid">
+                {% block content %}
+                {% endblock %}
+        </div>
         </div>
 
-    <!-- Inserte otros Productos para  mostrar -->
+        <!-- Modal Login -->
+        <div id="ModalLogin" class="modal1">
+            <div class="modal1-contenido">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <label for="username">Correo Electronico:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">Iniciar Sesión</button>
+                    <a href="{% url 'register' %}">registrarse</a>
+                </form>
+            </div>
         </div>
- 
-   <!-- Pie de Página -->
-   <div class="footer">                                  <!-- Footer -->
-        <div class="row" style="padding: 1%;">
-              <div class="col-3">                                                          <!--  parte 1  -->
-                  <h6 style="color: rgb(88, 38, 20);">INFORMACIÓN RELEVANTE</h6>
-                  <p style="font-size: smaller; color: rgb(10, 10, 10);">
+
+        <!-- Pie de Página -->
+        <div class="footer">
+            <div class="row" style="padding: 1%;">
+                <div class="col-3">
+                    <h6 style="color: rgb(88, 38, 20);">INFORMACIÓN RELEVANTE</h6>
+                    <p style="font-size: smaller; color: rgb(10, 10, 10);">
                         Trabajo de "Integración de Plataformas", impartido
                         por el docente:
-                  </p>
-                  <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20);">  
-                  <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M160 64c0-35.3 28.7-64 64-64H576c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H336.8c-11.8-25.5-29.9-47.5-52.4-64H384V320c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32v32h64V64L224 64v49.1C205.2 102.2 183.3 96 160 96V64zm0 64a96 96 0 1 1 0 192 96 96 0 1 1 0-192zM133.3 352h53.3C260.3 352 320 411.7 320 485.3c0 14.7-11.9 26.7-26.7 26.7H26.7C11.9 512 0 500.1 0 485.3C0 411.7 59.7 352 133.3 352z"/></svg>
-                    Diego Cares
-                    <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 640 512"><path d="M160 64c0-35.3 28.7-64 64-64H576c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H336.8c-11.8-25.5-29.9-47.5-52.4-64H384V320c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32v32h64V64L224 64v49.1C205.2 102.2 183.3 96 160 96V64zm0 64a96 96 0 1 1 0 192 96 96 0 1 1 0-192zM133.3 352h53.3C260.3 352 320 411.7 320 485.3c0 14.7-11.9 26.7-26.7 26.7H26.7C11.9 512 0 500.1 0 485.3C0 411.7 59.7 352 133.3 352z"/></svg>
-                  </h6>
-                    <br><p style="font-size: smaller; color: rgb(10, 10, 10);">
-                    En el semestre primero del año 2024. Esperamos nuestro 7 con ansias :D
-                  </p>
-              </div>
-              
-              <div class="col-6"> </div>                                                   <!-- separador -->
+                    </p>
+                    <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20);">
+                        Diego Cares
+                    </h6>
+                    <p style="font-size: smaller; color: rgb(10, 10, 10);">
+                        En el semestre primero del año 2024. Esperamos nuestro 7 con ansias :D
+                    </p>
+                </div>
 
-              <div class="col-3">                                                          <!--  parte 2  -->
-                <h6 style="color: rgb(88, 38, 20)">ESTUDIANTES</h6>
-                <p style="font-size: smaller; color: rgb(10, 10, 10);">
-                  Diseñado, desarrollado y especialmente sufrido por:
-                  <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20);">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-52.1 52.1 0 0-1-1 0 0-16-16-96-96-17-17 52.1-52.1c25-25 65.5-25 90.5 0zM241 114.9c-9.4-9.4-24.6-9.4-33.9 0L105 217c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L173.1 81c28.1-28.1 73.7-28.1 101.8 0L288 94.1l17 17 96 96 16 16 1 1-17 17L229.5 412.5c-48 48-109.2 80.8-175.8 94.1l-25 5c-7.9 1.6-16-.9-21.7-6.6s-8.1-13.8-6.6-21.7l5-25c13.3-66.6 46.1-127.8 94.1-175.8L254.1 128 241 114.9z"/></svg>
-                    Ignacia Ciero R.
-                    <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 512 512"><path d="M453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-52.1 52.1 0 0-1-1 0 0-16-16-96-96-17-17 52.1-52.1c25-25 65.5-25 90.5 0zM241 114.9c-9.4-9.4-24.6-9.4-33.9 0L105 217c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L173.1 81c28.1-28.1 73.7-28.1 101.8 0L288 94.1l17 17 96 96 16 16 1 1-17 17L229.5 412.5c-48 48-109.2 80.8-175.8 94.1l-25 5c-7.9 1.6-16-.9-21.7-6.6s-8.1-13.8-6.6-21.7l5-25c13.3-66.6 46.1-127.8 94.1-175.8L254.1 128 241 114.9z"/></svg>
-                  </h6>
-                  <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20)">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 640 512"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
-                    Alejandro Pimiento O. 
-                    <svg xmlns="http://www.w3.org/2000/svg" height="10px" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
+                <div class="col-6"></div>
+
+                <div class="col-3">
+                    <h6 style="color: rgb(88, 38, 20)">ESTUDIANTES</h6>
+                    <p style="font-size: smaller; color: rgb(10, 10, 10);">
+                        Diseñado, desarrollado y especialmente sufrido por:
+                    </p>
+                    <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20);">
+                        Ignacia Ciero R.
+                    </h6>
+                    <h6 style="font-size: small; padding-left: 8%; color: rgb(88, 38, 20); fill: rgb(88, 38, 20)">
+                        Alejandro Pimiento O.
                     </h6>
                 </p>
 
@@ -148,3 +140,4 @@
 
 </body>
 </html>
+
