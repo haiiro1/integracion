@@ -1,13 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 from rest_framework import generics
-from .models import Producto, ItemCarrito
+from .models import Producto
 from .serializers import ProductoSerializer
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .transbank_integration import issue_payment
 
+
+
+def testeo(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
 
 def base(request):
     context = {}
@@ -31,6 +34,7 @@ class ProductoListCreate(generics.ListCreateAPIView):
 
 class ProductoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Producto.objects.all()
+<<<<<<< HEAD
     serializer_class = ProductoSerializer
 
 
@@ -87,3 +91,6 @@ def realizar_pago(request):
     
     # Procesar la respuesta y devolver una respuesta JSON
     return JsonResponse(response)
+=======
+    serializer_class = ProductoSerializer
+>>>>>>> parent of aa330f2 (0.0.7)

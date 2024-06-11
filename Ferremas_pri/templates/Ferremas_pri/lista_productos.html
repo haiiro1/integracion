@@ -1,11 +1,10 @@
 {% extends 'Ferremas_pri/base.html' %}
 {% load static %}
 {% block content %}
-<br><br>
+
 <h1>Nuestros Productos</h1>
 
-
-<div class="row" style="padding: 2%;">
+<div class="row">
     {% for producto in productos %}
     <div class="p_card" style="background-color: rgba(252, 214, 196, 0.274); border-radius: 5%;" alt="{{ producto.nombre }}">
         <img src="{{ producto.imagen.url }}" style="max-width: 250px; border-radius: 5%;">
@@ -13,7 +12,11 @@
           <h4><b>{{ producto.marca }}</b></h4> 
           <p>{{ producto.nombre }}</p>
           <p>{{ producto.precio }}</p>
+<<<<<<< HEAD
           <button class="add-to-cart" data-product-id="{{ producto.id }}">Agregar al Carrito</button>
+=======
+          <p style="text-align: right;"><button> + </button></p>
+>>>>>>> parent of aa330f2 (0.0.7)
         </div>
     </div>
     {% endfor %}
