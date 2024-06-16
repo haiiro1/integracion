@@ -13,7 +13,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(' crud/login.html')
+            return redirect('inicio')  # Redirige a la página de inicio u otra página después del registro
     else:
         form = CustomUserCreationForm()
     return render(request, 'crud/signup.html', {'form': form})

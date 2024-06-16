@@ -3,6 +3,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.crypto import get_random_string
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = [
@@ -25,7 +26,12 @@ class CustomUser(AbstractUser):
     ], default='CUSTOMER')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'rut', 'gender']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'rut', 'gender']
+
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = get_random_string(length=10)  # Generar un nombre de usuario aleatorio
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.email

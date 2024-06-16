@@ -1,14 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from rest_framework import generics
+from .models import Carrito, ItemCarrito, Producto
 from  .api import Mindicador
-from .models import * 
+from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 from .serializers import ProductoSerializer
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .transbank_integration import issue_payment
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+
+
 
 
 def get_dolar_price(request):
@@ -45,22 +47,25 @@ class ProductoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 
 #                                                                               Cosas Carrito ~
+
 @login_required
 def ver_carrito(request):
-    items = ItemCarrito.objects.filter(user=request.user)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    items = ItemCarrito.objects.filter(carrito=carrito)
     total = sum(item.producto.precio * item.cantidad for item in items)
     return render(request, 'Ferremas_pri/carrito.html', {'items': items, 'total': total})
 
 @login_required
 def agregar_al_carrito(request, producto_id):
     producto = Producto.objects.get(pk=producto_id)
-    item, created = ItemCarrito.objects.get_or_create(user=request.user, producto=producto)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    item, created = ItemCarrito.objects.get_or_create(carrito=carrito, producto=producto)
     if not created:
         item.cantidad += 1
         item.save()
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        total_items = ItemCarrito.objects.filter(user=request.user).count()
+        total_items = ItemCarrito.objects.filter(carrito=carrito).count()
         return JsonResponse({'total_items': total_items})
     
     return redirect('ver_carrito')
@@ -73,12 +78,14 @@ def eliminar_del_carrito(request, item_id):
 
 @login_required
 def limpiar_carrito(request):
-    ItemCarrito.objects.filter(user=request.user).delete()
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    ItemCarrito.objects.filter(carrito=carrito).delete()
     return redirect('ver_carrito')
 
 @login_required
 def obtener_contenido_carrito(request):
-    items = ItemCarrito.objects.filter(user=request.user)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    items = ItemCarrito.objects.filter(carrito=carrito)
     total = sum(item.producto.precio * item.cantidad for item in items)
     html = render_to_string('Ferremas_pri/partials/carrito_contenido.html', {'items': items, 'total': total})
     return JsonResponse({'html': html})

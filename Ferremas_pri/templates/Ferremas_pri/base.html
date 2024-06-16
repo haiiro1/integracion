@@ -24,8 +24,7 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'inicio' %}">Inicio</a></li>
-                        <li><a href="{% url 'inicio' %}">Productos</a></li>
-                        <li><a href="{% url 'inicio' %}">Informaciones</a></li>
+                        <li><a href="{% url 'ver_carrito' %}">Carrito</a></li>
                         <li><a href="{% url 'inicio' %}">Menú</a></li>
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
