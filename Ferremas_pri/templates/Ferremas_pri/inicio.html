@@ -18,7 +18,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/carrito.js' %}"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     // Realiza una solicitud AJAX para obtener el precio del dólar
@@ -41,22 +41,39 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.send();
 });
 </script>
+
 <script>
-    $(document).ready(function() {
-        $('.add-to-cart').on('click', function() {
-            var productId = $(this).data('product-id');
-            $.ajax({
-                url: "{% url 'agregar_al_carrito' 0 %}".replace('0', productId),
-                method: "GET",
-                success: function(data) {
-                    alert('Producto agregado al carrito. Total items: ' + data.total_items);
-                },
-                error: function(xhr, status, error) {
-                    alert('Error al agregar el producto al carrito.');
-                }
-            });
+// JavaScript para manejar la adición al carrito
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleccionar todos los botones "Agregar al Carrito"
+    var addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+    // Agregar un evento de clic a cada botón
+    addToCartButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productId = this.getAttribute('data-product-id');  // Obtener el ID del producto
+
+            // Realizar una solicitud AJAX para agregar el producto al carrito
+            fetch(`/carrito/agregar/${productId}/`)  // Ajustar la URL según la estructura de tu aplicación
+                .then(response => {
+                    if (response.ok) {
+                        // El producto se agregó correctamente al carrito
+                        alert('Producto agregado al carrito!');
+                        // Opcional: Puedes realizar acciones adicionales como actualizar el contador de carrito
+                        // window.location.reload();  // Recargar la página para actualizar la vista del carrito
+                    } else {
+                        // Manejar errores si la solicitud no es exitosa
+                        alert('Error al agregar el producto al carrito');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al realizar la solicitud:', error);
+                    alert('Error al agregar el producto al carrito');
+                });
         });
     });
+});
 </script>
+
 {% endblock %}
 

@@ -9,6 +9,7 @@ urlpatterns = [
     path('user/', include('login.urls')),
     path('user/', include('django.contrib.auth.urls')),
     path('api/', include('Ferremas_pri.urls')),
+    path('carrito/', include('Carrito.urls')),
 ]
     
 if settings.DEBUG:

@@ -1,0 +1,55 @@
+{% extends 'Ferremas_pri/base.html' %}
+{% block content %}
+
+<h1>Carrito de Compras</h1>
+<div class="container" style="padding: 5%; border-radius: 5%;">
+    <table style="padding: 5%; border-radius: 5%;">
+        {% if items_carrito %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items_carrito %}
+                    <tr>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ item.producto.precio }}</td>
+                        <td>{{ item.producto.precio|floatformat:2 }}</td>
+                        <td>
+                            <form action="{% url 'aumentar_cantidad' item.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit">+</button>
+                            </form>
+                            <form action="{% url 'disminuir_cantidad' item.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit">-</button>
+                            </form>
+                            <form action="{% url 'remover_del_carrito' item.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Total de productos: {{ cantidad_items }}</p>
+        <p>Subtotal: ${{ subtotal|floatformat:2 }}</p>
+        <p>Gastos de envío: $2800</p>
+        <p>Total: ${{ total|floatformat:2 }}</p>
+    {% else %}
+        <p>Tu carrito está vacío.</p>
+    {% endif %}
+
+    <a href="{% url 'productos' %}">Seguir comprando</a>
+    </table>
+</div>
+
+{% endblock %}

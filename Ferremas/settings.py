@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Ferremas_pri',
     'login',
     'rest_framework',
+    'Carrito',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'Ferremas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Asegúrate de incluir la carpeta principal de templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

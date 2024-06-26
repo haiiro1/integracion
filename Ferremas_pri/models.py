@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 
+
 #                           Productos~
 
 class Categoria(models.Model):
@@ -24,22 +25,4 @@ class Producto(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - {self.codigo_producto}"
-
-
-#                           Carrito~
-
-
-class Carrito(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    productos = models.ManyToManyField('Producto', through='ItemCarrito')
-
-    def __str__(self):
-        return f"Carrito de {self.usuario.email}"
-
-class ItemCarrito(models.Model):
-    producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
-    carrito = models.ForeignKey('Carrito', on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return f"{self.cantidad} x {self.producto.nombre}"
+    

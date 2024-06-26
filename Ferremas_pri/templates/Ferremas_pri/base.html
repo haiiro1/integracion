@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="carrito.js"> </script>
 </head>
 <body>
     <div class="header">
@@ -24,7 +23,7 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'inicio' %}">Inicio</a></li>
-                        <li><a href="{% url 'ver_carrito' %}">Carrito</a></li>
+                        <li><a href="{% url 'mostrar_carrito' %}">Carrito</a></li>
                         <li><a href="{% url 'inicio' %}">Menú</a></li>
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
