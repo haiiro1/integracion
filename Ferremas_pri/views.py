@@ -91,16 +91,4 @@ def obtener_contenido_carrito(request):
     return JsonResponse({'html': html})
 
 #                                                              Integrando la API de Transbank ~
-def realizar_pago(request):
-    # Recordar obtener los datos necesarios para realizar el pago en transbank pls ~
-    commerce_id = "mi_commerce_id"
-    commerce_payment_id = "mi_commerce_payment_id"
-    processor_payment_id = "mi_processor_payment_id"
-    service_id = "mi_service_id"
-    client_id = "mi_client_id"
 
-    # Llamar a la función para realizar el pago
-    response = issue_payment(commerce_id, commerce_payment_id, processor_payment_id, service_id, client_id)
-    
-    # Procesar la respuesta y devolver una respuesta JSON
-    return JsonResponse(response)
