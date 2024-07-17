@@ -42,8 +42,8 @@
 
 <p>Creado por dos estudiantes de 3er año de informática:</p>
   
-  [Ignacia Ciero R.](ig.ciero@duocuc.cl) <br>
-  [Alejandro Pimiento O.](al.pimiento@duocuc.cl) <br>
+  [Ignacia Ciero R.](https://github.com/InaCiero) <br>
+  [Alejandro Pimiento O.](https://github.com/haiiro1) <br>
   
 
 <h2>Licencias</h2>
