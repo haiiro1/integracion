@@ -1,8 +1,8 @@
 <h1>FERREMAS</h1>
 	<h5>Proyexto semestral - Integración de platadormas</h5>
-<br>
 
-*insertar imagen*
+![Icono_Ferremas](https://github.com/user-attachments/assets/3dc4b824-a805-4d44-adc4-b5684273e93d)
+<br>
 
 <h2>La página para FERREMAS</h2>
 
@@ -41,10 +41,10 @@
 <h2>Autores del Proyecto</h2>
 
 <p>Creado por dos estudiantes de 3er año de informática:</p>
-  <ul> 
-    <li>Ignacia Ciero R. <ig.ciero@duocuc.cl> </li>
-    <li>Alejandro Pimiento O. <al.pimiento@duocuc.cl></li>
-  </ul><br>
+  
+  [Ignacia Ciero R.](ig.ciero@duocuc.cl) <br>
+  [Alejandro Pimiento O.](al.pimiento@duocuc.cl) <br>
+  
 
 <h2>Licencias</h2>
 
